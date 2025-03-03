@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensure proper scaling on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merle</title>
+  <!-- Google Fonts: using Share Tech Mono, Lobster, and Orbitron -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Lobster&family=Orbitron:wght@700&display=swap" 
+    rel="stylesheet"
+  >
+  <style>
+    /* Global Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      overflow-x: hidden;
+    }
+    body {
+      /* Dark charcoal -> Muted gold gradient */
+      background: linear-gradient(to right, #2C2C2C 40%, #BCA65A 100%);
+      color: #eee; /* Light text for readability */
+      font-family: 'Share Tech Mono', monospace, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      /* Slightly transparent dark overlay */
+      background-color: rgba(0, 0, 0, 0.3);
+      /* Softer pink border */
+      border: 2px solid #C97E9C;
+      border-radius: 15px;
+      /* Subtle box-shadow */
+      box-shadow: 0 0 10px rgba(201, 126, 156, 0.1);
+      transition: all 0.3s ease;
+    }
+    /* Title styling */
+    h1.geisha-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 10px;
+      /* Shiny gold color with glow */
+      color: #FFD700;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    .subheading {
+      text-align: center;
+      font-size: 1.2em;
+      /* Vibrant green with glow */
+      color: #00FF7F;
+      text-shadow: 0 0 6px rgba(0, 255, 127, 0.6);
+      margin-bottom: 30px;
+    }
+    /* Header image */
+    .header-image {
+      width: 100%;
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(201, 126, 156, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    .header-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Socials Section */
+    .socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .socials a {
+      display: flex;
+      width: 50px;
+      height: 50px;
+      border: 2px solid #C97E9C;
+      border-radius: 50%;
+      background-color: transparent;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .socials a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 5px rgba(201, 126, 156, 0.2);
+    }
+    .socials img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+    /* Contract Address Section */
+    .ca-section {
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .ca-title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      text-align: center;
+      /* Shiny gold accent */
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    .ca-box {
+      background-color: rgba(0,0,0,0.3);
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 10px;
+      word-break: break-all;
+      box-shadow: 0 0 5px rgba(201, 126, 156, 0.1);
+      transition: background-color 0.3s ease;
+    }
+    .copy-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px;
+      width: 120px;
+      background-color: #4A4A4A;
+      color: #fff;
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .copy-btn:hover {
+      background-color: #C97E9C;
+      color: #2C2C2C;
+      box-shadow: 0 0 10px rgba(201, 126, 156, 0.2);
+    }
+    /* Photo Editor Section */
+    .photo-editor-section {
+      margin-bottom: 20px;
+    }
+    .photo-editor-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      /* Shiny gold accent */
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .photo-stage {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 15px;
+      border: 2px dashed #C97E9C;
+      border-radius: 10px;
+      background-color: rgba(0,0,0,0.2);
+      box-shadow: 0 0 5px rgba(201, 126, 156, 0.1);
+      min-height: 200px;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    #uploadedPhoto {
+      width: 100%;
+      height: auto;
+      display: none;
+    }
+    #catOverlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 120px;
+      cursor: move;
+      user-select: none;
+      transition: transform 0.1s ease;
+    }
+    @media (min-width: 768px) {
+      #catOverlay {
+        width: 150px;
+      }
+    }
+    .draggable-text {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 24px;
+      font-family: 'Share Tech Mono', monospace;
+      cursor: move;
+      user-select: none;
+      padding: 5px;
+      background: rgba(0,0,0,0.3);
+      border: 1px dashed #C97E9C;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+    .draggable-text.active {
+      border-color: #FFD700; /* Brighter gold for active text border */
+      box-shadow: 0 0 5px rgba(255,255,255,0.3);
+    }
+    .slider-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .slider-container label {
+      color: #fff;
+      font-size: 1em;
+    }
+    .save-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 15px;
+      background-color: #4A4A4A;
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #fff;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .save-btn:hover {
+      background-color: #C97E9C;
+      color: #2C2C2C;
+      box-shadow: 0 0 10px rgba(201,126,156,0.2);
+    }
+    #textControls {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.3);
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      text-align: center;
+      display: none;
+      transition: all 0.3s ease;
+    }
+    #textControls input[type="text"],
+    #textControls input[type="color"],
+    #textControls input[type="range"],
+    #textControls select {
+      background: #4A4A4A;
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 2px;
+      margin-bottom: 10px;
+    }
+    #textControls input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    /* How To Buy Section */
+    .how-to-buy {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.3);
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
+      transition: background-color 0.3s ease;
+    }
+    .how-to-buy h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    .how-to-buy ol {
+      padding-left: 20px;
+    }
+    .how-to-buy li {
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    /* Memes Section */
+    .meme-section {
+      margin-bottom: 20px;
+    }
+    .meme-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    .meme-container {
+      text-align: center;
+    }
+    .meme-item {
+      display: inline-block;
+      margin: 10px;
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
+      background-color: rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .meme-item:hover {
+      transform: scale(1.03);
+    }
+    .meme-item img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    /* Chart Container */
+    .chart-container {
+      width: 100%;
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(201,126,156,0.1);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .chart-container iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    /* Responsive adjustments for small devices */
+    @media (max-width: 480px) {
+      body {
+        font-size: 16px;
+      }
+      .chart-container iframe {
+        height: 300px;
+      }
+      .meme-item {
+        display: block;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Title & Intro -->
+    <h1 class="geisha-title">Merle</h1>
+    <p class="subheading">A girls cat.</p>
+    
+    <!-- Header Image -->
+    <div class="header-image">
+      <!-- Replace "merle.jpeg" with your actual cat image path -->
+      <img src="merle.jpeg" alt="Two-Faced Cat Artwork">
+    </div>
+    
+    <!-- Socials Section -->
+    <div class="socials">
+      <a href="https://t.me/merlethecatsol" target="_blank" rel="noopener noreferrer">
+        <img src="telegram.jpeg" alt="Telegram">
+      </a>
+      <a href="https://x.com/merlethecat?s=21" target="_blank" rel="noopener noreferrer">
+        <img src="twitter.jpeg" alt="Twitter">
+      </a>
+      <a href="https://dexscreener.com/solana/8xLvahZaZR3ZvYNnsD1eKkQqoFLNvkFFnmqrABmsUYaw" target="_blank" rel="noopener noreferrer">
+        <img src="dex.jpeg" alt="Dex">
+      </a>
+      <a href="https://pump.fun/Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump" target="_blank" rel="noopener noreferrer">
+        <img src="Pumpfun.jpeg" alt="PumpFun">
+      </a>
+    </div>
+    
+    <!-- Contract Address Section -->
+    <div class="ca-section">
+      <div class="ca-title">Contract Address:</div>
+      <div class="ca-box" id="caAddress">
+        Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump
+      </div>
+      <button class="copy-btn" onclick="copyCA()">Copy</button>
+    </div>
+    
+    <!-- Photo Editor Section -->
+    <div class="photo-editor-section">
+      <h2>Add Merle to Your Photo</h2>
+      <div class="controls">
+        <input type="file" id="uploadInput" accept="image/*" style="font-size:1em; color:#fff;">
+      </div>
+      <div class="photo-stage" id="photoStage">
+        <!-- Uploaded photo; hidden until loaded -->
+        <img id="uploadedPhoto" src="" alt="Uploaded Photo">
+        <!-- Overlay image -->
+        <!-- Replace "merle.png" with your actual overlay image path -->
+        <img src="merle.png" alt="Two-Faced Cat Overlay" id="catOverlay">
+      </div>
+      <div class="slider-container">
+        <label for="sizeSlider">Logo Size:</label>
+        <input type="range" id="sizeSlider" min="0.5" max="2" step="0.1" value="1">
+      </div>
+      <div class="slider-container" id="angleContainer">
+        <label for="angleSlider">Logo Angle:</label>
+        <input type="range" id="angleSlider" min="-180" max="180" step="1" value="0">
+      </div>
+      <button class="save-btn" onclick="savePhoto()">Save Photo</button>
+      
+      <!-- Text Functionality -->
+      <button id="addTextBtn" class="save-btn" style="margin-top:10px;">Add Text</button>
+      <div id="textControls">
+        <input type="text" id="textInput" placeholder="Enter your text">
+        <div class="slider-container">
+          <label for="textSizeSlider">Text Size:</label>
+          <input type="range" id="textSizeSlider" min="10" max="100" value="24">
+        </div>
+        <div class="slider-container">
+          <label for="textColorPicker">Text Color:</label>
+          <input type="color" id="textColorPicker" value="#ffffff">
+        </div>
+        <div class="slider-container">
+          <label for="fontStyleSelect">Font Style:</label>
+          <select id="fontStyleSelect">
+            <option value="'Share Tech Mono', monospace">Mono</option>
+            <option value="'Lobster', cursive">Lobster</option>
+            <option value="'Orbitron', sans-serif">Orbitron</option>
+          </select>
+        </div>
+        <button id="deleteTextBtn" class="copy-btn" style="margin-top:10px;">Delete Text</button>
+      </div>
+      
+      <button id="resetLayoutBtn" class="save-btn" style="margin-top:10px;">Reset Positions</button>
+    </div>
+    
+<!-- Memes Section -->
+    <div class="meme-section">
+    
+      <div class="meme-container">
+        <!-- Image Meme -->
+        <div class="meme-item">
+          <img src="meme.jpeg" alt="Meme 1">
+        </div>
+      </div>
+    </div>
+    <!-- How To Buy Section -->
+    <div class="how-to-buy">
+      <h2>How to Buy</h2>
+      <ol>
+        <li>Set up a Solana-compatible wallet (e.g., Phantom) and fund it with SOL.</li>
+        <li>Visit a DEX (e.g., Jupiter or Raydium) and connect your wallet.</li>
+        <li>Use the contract address above to locate $Merle.</li>
+        <li>Swap your SOL for $Merle tokens.</li>
+        <li>Confirm the transaction and enjoy your Merle The Cat!</li>
+      </ol>
+    </div>
+    
+    <!-- Memes Section -->
+    <div class="meme-section">
+      <h2>Community Memes</h2>
+      <div class="meme-container">
+        <!-- Image Meme -->
+        <div class="meme-item">
+          <img src="meme1.jpeg" alt="Meme 1">
+        </div>
+  <div class="meme-item">
+          <img src="meme2.jpeg" alt="Meme 1">
+        </div>
+  <div class="meme-item">
+          <img src="meme3.jpeg" alt="Meme 1">
+        </div>
+  <div class="meme-item">
+          <img src="meme4.jpeg" alt="Meme 1">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Chart Container -->
+    <div class="chart-container">
+ <iframe 
+	width="100%" 
+	height="600" 
+	src="https://birdeye.so/tv-widget/Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=show&theme=dark&cssCustomProperties=--tv-color-pane-background%3A%23201e18&cssCustomProperties=--tv-color-platform-background%3A%23201e18&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=mainSeriesProperties.candleStyle.downColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.borderDownColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.wickDownColor%3A%23ff83c5" 
+	frameborder="0" 
+	allowfullscreen>
+</iframe>
+    </div>
+  </div>
+
+  <script>
+    /* Copy Contract Address */
+    function copyCA() {
+      const caText = document.getElementById("caAddress").textContent.trim();
+      navigator.clipboard.writeText(caText)
+        .then(() => alert("Contract Address copied!"))
+        .catch(err => console.error("Failed to copy text:", err));
+    }
+    
+    /* Photo Editor Functionality */
+    const uploadInput = document.getElementById('uploadInput');
+    const photoStage = document.getElementById('photoStage');
+    const uploadedPhoto = document.getElementById('uploadedPhoto');
+    const catOverlay = document.getElementById('catOverlay');
+    const sizeSlider = document.getElementById('sizeSlider');
+    const angleSlider = document.getElementById('angleSlider');
+    
+    let currentScale = 1;
+    let currentAngle = 0;
+    
+    function updateOverlayTransform() {
+      catOverlay.style.transform = `scale(${currentScale}) rotate(${currentAngle}deg)`;
+    }
+    
+    sizeSlider.addEventListener('input', () => {
+      currentScale = sizeSlider.value;
+      updateOverlayTransform();
+    });
+    
+    angleSlider.addEventListener('input', () => {
+      currentAngle = angleSlider.value;
+      updateOverlayTransform();
+    });
+    
+    // Show uploaded photo
+    uploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        uploadedPhoto.src = event.target.result;
+        uploadedPhoto.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    });
+    
+    // Drag overlay image (catOverlay)
+    let isDraggingLogo = false;
+    let logoDragOffset = { x: 0, y: 0 };
+    
+    catOverlay.addEventListener('mousedown', (e) => {
+      isDraggingLogo = true;
+      const overlayRect = catOverlay.getBoundingClientRect();
+      logoDragOffset.x = e.clientX - overlayRect.left;
+      logoDragOffset.y = e.clientY - overlayRect.top;
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      if (!isDraggingLogo) return;
+      e.preventDefault();
+      const stageRect = photoStage.getBoundingClientRect();
+      const overlayRect = catOverlay.getBoundingClientRect();
+      let newLeft = e.clientX - stageRect.left - logoDragOffset.x;
+      let newTop = e.clientY - stageRect.top - logoDragOffset.y;
+      newLeft = Math.max(0, Math.min(newLeft, stageRect.width - overlayRect.width));
+      newTop = Math.max(0, Math.min(newTop, stageRect.height - overlayRect.height));
+      catOverlay.style.left = newLeft + 'px';
+      catOverlay.style.top = newTop + 'px';
+    });
+    
+    document.addEventListener('mouseup', () => { 
+      isDraggingLogo = false; 
+    });
+    
+    // Touch support for overlay dragging
+    catOverlay.addEventListener('touchstart', (e) => {
+      isDraggingLogo = true;
+      const touch = e.touches[0];
+      const overlayRect = catOverlay.getBoundingClientRect();
+      logoDragOffset.x = touch.clientX - overlayRect.left;
+      logoDragOffset.y = touch.clientY - overlayRect.top;
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+      if (!isDraggingLogo) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const stageRect = photoStage.getBoundingClientRect();
+      const overlayRect = catOverlay.getBoundingClientRect();
+      let newLeft = touch.clientX - stageRect.left - logoDragOffset.x;
+      let newTop = touch.clientY - stageRect.top - logoDragOffset.y;
+      newLeft = Math.max(0, Math.min(newLeft, stageRect.width - overlayRect.width));
+      newTop = Math.max(0, Math.min(newTop, stageRect.height - overlayRect.height));
+      catOverlay.style.left = newLeft + 'px';
+      catOverlay.style.top = newTop + 'px';
+    }, { passive: false });
+    
+    document.addEventListener('touchend', () => { 
+      isDraggingLogo = false; 
+    });
+    
+    /* Text Functionality */
+    const addTextBtn = document.getElementById('addTextBtn');
+    const textControls = document.getElementById('textControls');
+    const textInput = document.getElementById('textInput');
+    const textSizeSlider = document.getElementById('textSizeSlider');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const fontStyleSelect = document.getElementById('fontStyleSelect');
+    const deleteTextBtn = document.getElementById('deleteTextBtn');
+    
+    let activeTextElement = null;
+    
+    addTextBtn.addEventListener('click', () => {
+      const newText = document.createElement('div');
+      newText.classList.add('draggable-text');
+      newText.textContent = "New Text";
+      newText.style.fontSize = textSizeSlider.value + 'px';
+      newText.style.color = textColorPicker.value;
+      newText.style.fontFamily = fontStyleSelect.value;
+      newText.style.left = '20px';
+      newText.style.top = '20px';
+      photoStage.appendChild(newText);
+      setActiveText(newText);
+      
+      let isDraggingText = false;
+      let textDragOffset = { x: 0, y: 0 };
+      
+      newText.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        setActiveText(newText);
+        isDraggingText = true;
+        const rect = newText.getBoundingClientRect();
+        textDragOffset.x = e.clientX - rect.left;
+        textDragOffset.y = e.clientY - rect.top;
+      });
+      
+      document.addEventListener('mousemove', (e) => {
+        if (!isDraggingText) return;
+        e.preventDefault();
+        const stageRect = photoStage.getBoundingClientRect();
+        let newLeft = e.clientX - stageRect.left - textDragOffset.x;
+        let newTop = e.clientY - stageRect.top - textDragOffset.y;
+        newLeft = Math.max(0, Math.min(newLeft, stageRect.width - newText.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, stageRect.height - newText.offsetHeight));
+        newText.style.left = newLeft + 'px';
+        newText.style.top = newTop + 'px';
+      });
+      
+      document.addEventListener('mouseup', () => { 
+        isDraggingText = false; 
+      });
+      
+      newText.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        setActiveText(newText);
+        isDraggingText = true;
+        const touch = e.touches[0];
+        const rect = newText.getBoundingClientRect();
+        textDragOffset.x = touch.clientX - rect.left;
+        textDragOffset.y = touch.clientY - rect.top;
+      });
+      
+      document.addEventListener('touchmove', (e) => {
+        if (!isDraggingText) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const stageRect = photoStage.getBoundingClientRect();
+        let newLeft = touch.clientX - stageRect.left - textDragOffset.x;
+        let newTop = touch.clientY - stageRect.top - textDragOffset.y;
+        newLeft = Math.max(0, Math.min(newLeft, stageRect.width - newText.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, stageRect.height - newText.offsetHeight));
+        newText.style.left = newLeft + 'px';
+        newText.style.top = newTop + 'px';
+      }, { passive: false });
+      
+      document.addEventListener('touchend', () => { 
+        isDraggingText = false; 
+      });
+    });
+    
+    function setActiveText(element) {
+      document.querySelectorAll('.draggable-text').forEach(el => el.classList.remove('active'));
+      activeTextElement = element;
+      activeTextElement.classList.add('active');
+      textControls.style.display = 'block';
+      textInput.value = activeTextElement.textContent;
+      textSizeSlider.value = parseInt(window.getComputedStyle(activeTextElement).fontSize);
+      textColorPicker.value = rgbToHex(window.getComputedStyle(activeTextElement).color);
+      fontStyleSelect.value = activeTextElement.style.fontFamily || "'Share Tech Mono', monospace";
+    }
+    
+    textInput.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.textContent = textInput.value;
+      }
+    });
+    
+    textSizeSlider.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.style.fontSize = textSizeSlider.value + 'px';
+      }
+    });
+    
+    textColorPicker.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.style.color = textColorPicker.value;
+      }
+    });
+    
+    fontStyleSelect.addEventListener('change', () => {
+      if (activeTextElement) {
+        activeTextElement.style.fontFamily = fontStyleSelect.value;
+      }
+    });
+    
+    deleteTextBtn.addEventListener('click', () => {
+      if (activeTextElement) {
+        activeTextElement.remove();
+        activeTextElement = null;
+        textControls.style.display = 'none';
+      }
+    });
+    
+    function rgbToHex(rgb) {
+      const rgbValues = rgb.match(/\d+/g);
+      if (!rgbValues) return "#ffffff";
+      return "#" + rgbValues.slice(0,3).map(x => {
+        const hex = parseInt(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join("");
+    }
+    
+    function resetLayout() {
+      const stageWidth = photoStage.offsetWidth;
+      const stageHeight = photoStage.offsetHeight;
+      const logoWidth = catOverlay.offsetWidth;
+      const logoHeight = catOverlay.offsetHeight;
+      catOverlay.style.left = (stageWidth - logoWidth) / 2 + "px";
+      catOverlay.style.top = (stageHeight - logoHeight) / 2 + "px";
+      document.querySelectorAll('.draggable-text').forEach(textEl => {
+        const textWidth = textEl.offsetWidth;
+        const textHeight = textEl.offsetHeight;
+        textEl.style.left = (stageWidth - textWidth) / 2 + "px";
+        textEl.style.top = (stageHeight - textHeight) / 2 + "px";
+      });
+    }
+    
+    document.getElementById("resetLayoutBtn").addEventListener("click", resetLayout);
+    
+    function savePhoto() {
+      if (!uploadedPhoto.src || uploadedPhoto.style.display === 'none') {
+        alert("Please upload a photo first.");
+        return;
+      }
+      const stageRect = photoStage.getBoundingClientRect();
+      const canvas = document.createElement('canvas');
+      canvas.width = stageRect.width;
+      canvas.height = stageRect.height;
+      const ctx = canvas.getContext('2d');
+      // Draw the uploaded photo as background
+      ctx.drawImage(uploadedPhoto, 0, 0, canvas.width, canvas.height);
+      
+      // Draw the overlay image (catOverlay)
+      const overlayImg = new Image();
+      overlayImg.crossOrigin = "Anonymous";
+      overlayImg.src = catOverlay.src;
+      overlayImg.onload = () => {
+        const stageBox = photoStage.getBoundingClientRect();
+        const logoBox = catOverlay.getBoundingClientRect();
+        const posX = logoBox.left - stageBox.left;
+        const posY = logoBox.top - stageBox.top;
+        ctx.save();
+        ctx.translate(posX + logoBox.width/2, posY + logoBox.height/2);
+        ctx.rotate(currentAngle * Math.PI / 180);
+        ctx.scale(currentScale, currentScale);
+        ctx.drawImage(overlayImg, -logoBox.width/2, -logoBox.height/2, logoBox.width, logoBox.height);
+        ctx.restore();
+        // Draw text overlays
+        document.querySelectorAll('.draggable-text').forEach(textEl => {
+          const style = window.getComputedStyle(textEl);
+          const fontSize = style.fontSize;
+          const fontFamily = style.fontFamily;
+          const color = style.color;
+          const left = textEl.offsetLeft;
+          const top = textEl.offsetTop;
+          ctx.font = `${fontSize} ${fontFamily}`;
+          ctx.fillStyle = color;
+          // Slight offset so text is fully visible
+          ctx.fillText(textEl.textContent, left, top + parseInt(fontSize));
+        });
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'two_faced_cat_composite.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      overlayImg.onerror = () => alert("Error loading the overlay image.");
+    }
+  </script>
+</body>
+</html>
