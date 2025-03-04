@@ -35,12 +35,9 @@
       width: 100%;
       margin: 0 auto;
       padding: 20px;
-      /* Slightly transparent dark overlay */
       background-color: rgba(0, 0, 0, 0.3);
-      /* Softer pink border */
       border: 2px solid #C97E9C;
       border-radius: 15px;
-      /* Subtle box-shadow */
       box-shadow: 0 0 10px rgba(201, 126, 156, 0.1);
       transition: all 0.3s ease;
     }
@@ -52,16 +49,14 @@
       letter-spacing: 0.1em;
       text-align: center;
       margin-bottom: 10px;
-      /* Shiny gold color with glow */
-      color: #FFD700;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      color: #FFD700; /* Shiny gold */
+      text-shadow: 0 0 8px rgba(255,215,0,0.6);
     }
     .subheading {
       text-align: center;
       font-size: 1.2em;
-      /* Vibrant green with glow */
-      color: #00FF7F;
-      text-shadow: 0 0 6px rgba(0, 255, 127, 0.6);
+      color: #00FF7F; /* Vibrant green */
+      text-shadow: 0 0 6px rgba(0,255,127,0.6);
       margin-bottom: 30px;
     }
     /* Header image */
@@ -71,7 +66,7 @@
       border-radius: 10px;
       overflow: hidden;
       margin-bottom: 20px;
-      box-shadow: 0 0 5px rgba(201, 126, 156, 0.2);
+      box-shadow: 0 0 5px rgba(201,126,156,0.2);
       transition: box-shadow 0.3s ease;
     }
     .header-image img {
@@ -100,7 +95,7 @@
     }
     .socials a:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 5px rgba(201, 126, 156, 0.2);
+      box-shadow: 0 0 5px rgba(201,126,156,0.2);
     }
     .socials img {
       width: 70%;
@@ -116,9 +111,8 @@
       font-size: 1.2em;
       margin-bottom: 10px;
       text-align: center;
-      /* Shiny gold accent */
-      color: #FFD700;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+      color: #FFD700; /* Shiny gold accent */
+      text-shadow: 0 0 5px rgba(255,215,0,0.5);
     }
     .ca-box {
       background-color: rgba(0,0,0,0.3);
@@ -131,7 +125,7 @@
       text-align: center;
       margin-bottom: 10px;
       word-break: break-all;
-      box-shadow: 0 0 5px rgba(201, 126, 156, 0.1);
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
       transition: background-color 0.3s ease;
     }
     .copy-btn {
@@ -150,7 +144,7 @@
     .copy-btn:hover {
       background-color: #C97E9C;
       color: #2C2C2C;
-      box-shadow: 0 0 10px rgba(201, 126, 156, 0.2);
+      box-shadow: 0 0 10px rgba(201,126,156,0.2);
     }
     /* Photo Editor Section */
     .photo-editor-section {
@@ -160,9 +154,8 @@
       text-align: center;
       margin-bottom: 10px;
       font-size: 1.4em;
-      /* Shiny gold accent */
-      color: #FFD700;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+      color: #FFD700; /* Shiny gold accent */
+      text-shadow: 0 0 5px rgba(255,215,0,0.5);
     }
     .controls {
       text-align: center;
@@ -176,7 +169,7 @@
       border: 2px dashed #C97E9C;
       border-radius: 10px;
       background-color: rgba(0,0,0,0.2);
-      box-shadow: 0 0 5px rgba(201, 126, 156, 0.1);
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
       min-height: 200px;
       overflow: hidden;
       transition: border-color 0.3s ease;
@@ -288,7 +281,7 @@
       margin-bottom: 10px;
       font-size: 1.6em;
       color: #FFD700;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+      text-shadow: 0 0 5px rgba(255,215,0,0.5);
     }
     .how-to-buy ol {
       padding-left: 20px;
@@ -297,38 +290,59 @@
       margin-bottom: 10px;
       color: #fff;
     }
-    /* Memes Section */
-    .meme-section {
-      margin-bottom: 20px;
-    }
-    .meme-section h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 1.6em;
-      color: #FFD700;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-    }
-    .meme-container {
+
+    /* First Meme Section (single meme) */
+    .meme-section.first-meme .meme-container {
       text-align: center;
     }
-    .meme-item {
+    .meme-section.first-meme .meme-item {
       display: inline-block;
-      margin: 10px;
+      border-radius: 10px; /* Rounded corners for the container */
+      overflow: hidden; 
+    }
+    .meme-section.first-meme .meme-item img {
+      /* Only one dimension needs to be constrained */
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 10px; /* Rounded corners for the image */
+    }
+
+    /* Community Memes Section – Horizontal slideshow */
+    .meme-section.community-memes .meme-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .meme-section.community-memes .meme-item {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
       border: 2px solid #C97E9C;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 0 5px rgba(201,126,156,0.1);
       background-color: rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
+      margin-bottom: 10px; /* Just a bit of spacing at bottom */
     }
-    .meme-item:hover {
+    .meme-section.community-memes .meme-item:hover {
       transform: scale(1.03);
     }
-    .meme-item img {
+    .meme-section.community-memes .meme-item img {
       display: block;
-      max-width: 100%;
+      object-fit: contain;
+      width: auto;
       height: auto;
+      max-width: 200px; /* limit only one dimension (width or height) */
+      max-height: 200px;
+      border-radius: 10px; /* Rounded corners */
     }
+
     /* Chart Container */
     .chart-container {
       width: 100%;
@@ -345,6 +359,7 @@
       height: 500px;
       border: none;
     }
+
     /* Responsive adjustments for small devices */
     @media (max-width: 480px) {
       body {
@@ -353,9 +368,9 @@
       .chart-container iframe {
         height: 300px;
       }
-      .meme-item {
-        display: block;
-        margin: 10px auto;
+      .meme-section.community-memes .meme-item img {
+        max-width: 120px;
+        max-height: 120px;
       }
     }
   </style>
@@ -395,6 +410,15 @@
         Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump
       </div>
       <button class="copy-btn" onclick="copyCA()">Copy</button>
+    </div>
+
+<!-- First Meme Section (single meme) -->
+    <div class="meme-section first-meme">
+      <div class="meme-container">
+        <div class="meme-item">
+          <img src="meme.jpeg" alt="Meme 1">
+        </div>
+      </div>
     </div>
     
     <!-- Photo Editor Section -->
@@ -446,57 +470,34 @@
       <button id="resetLayoutBtn" class="save-btn" style="margin-top:10px;">Reset Positions</button>
     </div>
     
-<!-- Memes Section -->
-    <div class="meme-section">
     
+    <!-- Community Memes Section – Horizontal slideshow -->
+    <div class="meme-section community-memes">
       <div class="meme-container">
-        <!-- Image Meme -->
-        <div class="meme-item">
-          <img src="meme.jpeg" alt="Meme 1">
-        </div>
-      </div>
-    </div>
-    <!-- How To Buy Section -->
-    <div class="how-to-buy">
-      <h2>How to Buy</h2>
-      <ol>
-        <li>Set up a Solana-compatible wallet (e.g., Phantom) and fund it with SOL.</li>
-        <li>Visit a DEX (e.g., Jupiter or Raydium) and connect your wallet.</li>
-        <li>Use the contract address above to locate $Merle.</li>
-        <li>Swap your SOL for $Merle tokens.</li>
-        <li>Confirm the transaction and enjoy your Merle The Cat!</li>
-      </ol>
-    </div>
-    
-    <!-- Memes Section -->
-    <div class="meme-section">
-      
-      <div class="meme-container">
-        <!-- Image Meme -->
         <div class="meme-item">
           <img src="meme1.jpeg" alt="Meme 1">
         </div>
-  <div class="meme-item">
-          <img src="meme2.jpeg" alt="Meme 1">
+        <div class="meme-item">
+          <img src="meme2.jpeg" alt="Meme 2">
         </div>
-  <div class="meme-item">
-          <img src="meme3.jpeg" alt="Meme 1">
+        <div class="meme-item">
+          <img src="meme3.jpeg" alt="Meme 3">
         </div>
-  <div class="meme-item">
-          <img src="meme4.jpeg" alt="Meme 1">
+        <div class="meme-item">
+          <img src="meme4.jpeg" alt="Meme 4">
         </div>
       </div>
     </div>
     
     <!-- Chart Container -->
     <div class="chart-container">
- <iframe 
-	width="100%" 
-	height="600" 
-	src="https://birdeye.so/tv-widget/Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=show&theme=dark&cssCustomProperties=--tv-color-pane-background%3A%23201e18&cssCustomProperties=--tv-color-platform-background%3A%23201e18&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=mainSeriesProperties.candleStyle.downColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.borderDownColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.wickDownColor%3A%23ff83c5" 
-	frameborder="0" 
-	allowfullscreen>
-</iframe>
+      <iframe 
+        width="100%" 
+        height="600" 
+        src="https://birdeye.so/tv-widget/Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=show&theme=dark&cssCustomProperties=--tv-color-pane-background%3A%23201e18&cssCustomProperties=--tv-color-platform-background%3A%23201e18&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%2832%2C+30%2C+24%2C+1%29&chartOverrides=mainSeriesProperties.candleStyle.downColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.borderDownColor%3A%23ff83c5&chartOverrides=mainSeriesProperties.candleStyle.wickDownColor%3A%23ff83c5" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
@@ -787,7 +788,6 @@
           const top = textEl.offsetTop;
           ctx.font = `${fontSize} ${fontFamily}`;
           ctx.fillStyle = color;
-          // Slight offset so text is fully visible
           ctx.fillText(textEl.textContent, left, top + parseInt(fontSize));
         });
         const dataURL = canvas.toDataURL('image/png');
