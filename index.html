@@ -309,38 +309,42 @@
       border-radius: 10px;
     }
 
-    /* Community Memes Section – Horizontal slideshow */
-    .meme-section.community-memes .meme-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 10px;
-      padding-bottom: 10px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-    .meme-section.community-memes .meme-item {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-      border: 2px solid #C97E9C;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 5px rgba(201,126,156,0.1);
-      background-color: rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-      margin-bottom: 10px;
-    }
-    .meme-section.community-memes .meme-item:hover {
-      transform: scale(1.03);
-    }
-    .meme-section.community-memes .meme-item img {
-      display: block;
-      object-fit: contain;
-      width: auto;
-      height: auto;
-      max-width: 200px;
-      max-height: 200px;
-      border-radius: 10px;
-    }
+/* Community Memes Section – Horizontal slideshow */
+.meme-section.community-memes .meme-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.meme-section.community-memes .meme-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  border: 2px solid #C97E9C;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(201,126,156,0.1);
+  background-color: rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  /* Responsive frame dimensions */
+  width: clamp(120px, 20vw, 200px);
+  height: clamp(120px, 20vw, 200px);
+}
+
+.meme-section.community-memes .meme-item:hover {
+  transform: scale(1.03);
+}
+
+.meme-section.community-memes .meme-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
 
     /* Chart Container */
     .chart-container {
@@ -501,6 +505,30 @@
         </div>
         <div class="meme-item">
           <img src="meme4.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme5.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme6.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme7.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme8.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme9.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme10.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme11.jpeg" alt="Meme 4">
+        </div>
+  <div class="meme-item">
+          <img src="meme12.jpeg" alt="Meme 4">
         </div>
       </div>
     </div>
