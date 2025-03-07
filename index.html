@@ -376,6 +376,61 @@
         max-height: 120px;
       }
     }
+    /* Modal Container */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s ease;
+}
+
+/* Modal Content (Enlarged Image) */
+.modal-content {
+  display: block;
+  margin: 5% auto;
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.modal-close:hover {
+  color: #bbb;
+}
+
+/* Download/Add to Photos Button */
+.modal-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4A4A4A;
+  color: #fff;
+  border: 2px solid #C97E9C;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+.modal-btn:hover {
+  background-color: #C97E9C;
+  color: #2C2C2C;
+}
   </style>
 </head>
 <body>
@@ -844,6 +899,59 @@
       };
       overlayImg.onerror = () => alert("Error loading the overlay image.");
     }
+    document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const closeBtn = document.querySelector('.modal-close');
+
+  // Detect if device is mobile (smart device)
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  // Set button text accordingly
+  downloadBtn.textContent = isMobile ? 'Add to Photos' : 'Download';
+
+  // Add click event to every image in the community memes section
+  const memeImages = document.querySelectorAll('.meme-section.community-memes .meme-item img');
+  memeImages.forEach(img => {
+    img.addEventListener('click', function() {
+      modal.style.display = 'block';
+      modalImage.src = this.src;
+      // Save the image source on the button for download functionality
+      downloadBtn.setAttribute('data-img-src', this.src);
+    });
+  });
+
+  // Close modal when clicking the close button
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  // Close modal when clicking outside the modal content
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  // Download/Add to Photos functionality
+  downloadBtn.addEventListener('click', function() {
+    const imgSrc = this.getAttribute('data-img-src');
+    if (!imgSrc) return;
+    // Create a temporary link element to trigger the download
+    const link = document.createElement('a');
+    link.href = imgSrc;
+    link.download = 'meme_image';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+});
   </script>
+  <!-- Modal for Enlarged Meme -->
+<div id="imageModal" class="modal">
+  <span class="modal-close">&times;</span>
+  <img class="modal-content" id="modalImage" alt="Enlarged Meme">
+  <button id="downloadBtn" class="modal-btn"></button>
+</div>
 </body>
 </html>
