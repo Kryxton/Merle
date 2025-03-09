@@ -82,10 +82,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Color Merle Yourself</h1>
-    </div>
-    <p>Tap on a area to fill it with the selected color.</p>
-  </div>
+    <h1>Interactive Flood Fill for Cat Regions</h1>
     <canvas id="canvas"></canvas>
     <div class="controls">
       <label for="colorPicker">Choose Fill Color:</label>
@@ -97,6 +94,9 @@
       <button id="downloadBtn" class="btn">Download</button>
       <!-- Back to Homepage Button -->
       <a href="index.html" class="btn">Back to Homepage</a>
+    </div>
+    <p>Tap on a region (avoid the blue boundaries) to fill it with the selected color.</p>
+  </div>
   
   <script>
     const canvas = document.getElementById('canvas');
@@ -168,30 +168,66 @@
       return (color.r < 50 && color.g < 50 && color.b > 200);
     }
 
-    // Flood fill using an iterative (stack-based) algorithm.
+    // Improved scanline flood fill algorithm.
     function floodFill(startX, startY, fillHex) {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const width = imageData.width;
       const height = imageData.height;
       const targetColor = getPixel(imageData, startX, startY);
       const fillColor = hexToRgb(fillHex);
+      const tolerance = 30;
       
-      // If target is already fillColor, return.
+      // If the target color is already the fill color, do nothing.
       if (colorMatch(targetColor, fillColor, 0)) return;
       
-      const tolerance = 30;
       const stack = [];
       stack.push({ x: startX, y: startY });
       
       while (stack.length) {
         const { x, y } = stack.pop();
-        const currentColor = getPixel(imageData, x, y);
-        if (colorMatch(targetColor, currentColor, tolerance) && !isBoundary(currentColor)) {
-          setPixel(imageData, x, y, fillColor);
-          if (x > 0) stack.push({ x: x - 1, y });
-          if (x < width - 1) stack.push({ x: x + 1, y });
-          if (y > 0) stack.push({ x, y: y - 1 });
-          if (y < height - 1) stack.push({ x, y: y + 1 });
+        let currentColor = getPixel(imageData, x, y);
+        // Skip if the current pixel doesn't match the target or is a boundary.
+        if (!colorMatch(currentColor, targetColor, tolerance) || isBoundary(currentColor)) continue;
+        
+        // Move left to find the start of the scanline.
+        let xLeft = x;
+        while (xLeft >= 0) {
+          currentColor = getPixel(imageData, xLeft, y);
+          if (!colorMatch(currentColor, targetColor, tolerance) || isBoundary(currentColor)) break;
+          xLeft--;
+        }
+        xLeft++;
+        
+        // Process the scanline.
+        let spanUp = false;
+        let spanDown = false;
+        while (xLeft < width) {
+          currentColor = getPixel(imageData, xLeft, y);
+          if (!colorMatch(currentColor, targetColor, tolerance) || isBoundary(currentColor)) break;
+          
+          setPixel(imageData, xLeft, y, fillColor);
+          
+          // Check the pixel above.
+          if (y > 0) {
+            let pixelAbove = getPixel(imageData, xLeft, y - 1);
+            if (!spanUp && colorMatch(pixelAbove, targetColor, tolerance) && !isBoundary(pixelAbove)) {
+              stack.push({ x: xLeft, y: y - 1 });
+              spanUp = true;
+            } else if (spanUp && (!colorMatch(pixelAbove, targetColor, tolerance) || isBoundary(pixelAbove))) {
+              spanUp = false;
+            }
+          }
+          // Check the pixel below.
+          if (y < height - 1) {
+            let pixelBelow = getPixel(imageData, xLeft, y + 1);
+            if (!spanDown && colorMatch(pixelBelow, targetColor, tolerance) && !isBoundary(pixelBelow)) {
+              stack.push({ x: xLeft, y: y + 1 });
+              spanDown = true;
+            } else if (spanDown && (!colorMatch(pixelBelow, targetColor, tolerance) || isBoundary(pixelBelow))) {
+              spanDown = false;
+            }
+          }
+          xLeft++;
         }
       }
       ctx.putImageData(imageData, 0, 0);
