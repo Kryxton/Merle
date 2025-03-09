@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color Merle Yourself</title>
+  <title>Interactive Flood Fill with High-Quality Download</title>
   <style>
-    /* Overall design similar to your website */
+    /* Overall design matching your website */
     body {
       background: linear-gradient(to right, #2E1F1C 40%, #FFA726 100%);
       color: #eee;
@@ -17,7 +17,7 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0, 0, 0, 0.3);
       padding: 20px;
       border: 2px solid #C97E9C;
       border-radius: 15px;
@@ -31,6 +31,7 @@
       border: 2px solid #FFC107;
       border-radius: 10px;
       max-width: 100%;
+      /* Ensure the image is rendered smoothly */
       image-rendering: auto;
       image-rendering: smooth;
     }
@@ -79,49 +80,43 @@
 </head>
 <body>
   <div class="container">
-    <h1>Color Merle Yourself</h1>
+    <h1>Interactive Flood Fill for Cat Regions</h1>
     <canvas id="canvas"></canvas>
     <div class="controls">
       <label for="colorPicker">Choose Fill Color:</label>
       <input type="color" id="colorPicker" value="#FF0000">
       <div class="recent-colors" id="recentColors">
-        <!-- Last five used colors will be shown here -->
+        <!-- Last five used colors will appear here -->
       </div>
-      <!-- The download button is only visible on mobile devices -->
-      <button id="downloadBtn" class="btn" style="display: none;">Save to Photos</button>
+      <button id="downloadBtn" class="btn">Download / Share</button>
     </div>
-    <p>Tap on a region to fill it with the selected color.</p>
+    <p>Tap on a region (avoid the blue boundaries) to fill it with the selected color.</p>
   </div>
-
+  
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    // Enable image smoothing for a smooth look.
+    // Set the image smoothing quality to high (if supported)
     ctx.imageSmoothingEnabled = true;
+    if (ctx.imageSmoothingQuality) {
+      ctx.imageSmoothingQuality = "high";
+    }
 
     const colorPicker = document.getElementById('colorPicker');
     const recentColorsContainer = document.getElementById('recentColors');
     const downloadBtn = document.getElementById('downloadBtn');
 
-    // Array for storing the last five used colors.
+    // Maintain an array of the last five used colors.
     let recentColors = [];
-
-    // Update the recent colors list and UI.
     function updateRecentColors(newColor) {
-      // If the new color is already the last one, do nothing.
       if (recentColors.length && recentColors[recentColors.length - 1] === newColor) return;
-      // Remove the color if it's already present.
       recentColors = recentColors.filter(c => c !== newColor);
       recentColors.push(newColor);
-      if (recentColors.length > 5) {
-        recentColors.shift();
-      }
+      if (recentColors.length > 5) recentColors.shift();
       renderRecentColors();
     }
-
     function renderRecentColors() {
       recentColorsContainer.innerHTML = "";
-      // Display from most recent (right) to older.
       recentColors.slice().reverse().forEach(color => {
         const span = document.createElement('span');
         span.style.backgroundColor = color;
@@ -132,24 +127,23 @@
       });
     }
 
-    // Load the image "own.jpeg"
+    // Load "own.jpeg" at its natural resolution to ensure highest quality.
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = "own.jpeg";
     img.onload = function() {
-      canvas.width = img.width;
-      canvas.height = img.height;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
     };
 
-    // Get pixel color at (x, y)
+    // Helper: get pixel at (x, y)
     function getPixel(imageData, x, y) {
       const index = (y * imageData.width + x) * 4;
       const d = imageData.data;
       return { r: d[index], g: d[index+1], b: d[index+2], a: d[index+3] };
     }
-
-    // Set pixel color at (x, y)
+    // Helper: set pixel at (x, y)
     function setPixel(imageData, x, y, color) {
       const index = (y * imageData.width + x) * 4;
       const d = imageData.data;
@@ -158,20 +152,18 @@
       d[index+2] = color.b;
       d[index+3] = 255;
     }
-
-    // Compare two colors with a tolerance.
+    // Helper: compare colors with tolerance.
     function colorMatch(c1, c2, tolerance) {
       return Math.abs(c1.r - c2.r) <= tolerance &&
              Math.abs(c1.g - c2.g) <= tolerance &&
              Math.abs(c1.b - c2.b) <= tolerance;
     }
-
-    // Define if a pixel is a blue boundary (blue boundaries: low R, G and high B).
+    // Helper: determine if a pixel is a blue boundary.
     function isBoundary(color) {
       return (color.r < 50 && color.g < 50 && color.b > 200);
     }
 
-    // Flood-fill algorithm using a stack.
+    // Flood fill using an iterative (stack-based) algorithm.
     function floodFill(startX, startY, fillHex) {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const width = imageData.width;
@@ -179,7 +171,7 @@
       const targetColor = getPixel(imageData, startX, startY);
       const fillColor = hexToRgb(fillHex);
       
-      // If the target color is already the fill color, do nothing.
+      // If target is already fillColor, return.
       if (colorMatch(targetColor, fillColor, 0)) return;
       
       const tolerance = 30;
@@ -200,7 +192,7 @@
       ctx.putImageData(imageData, 0, 0);
     }
 
-    // Convert hex to RGB object.
+    // Convert hex string to an RGB object.
     function hexToRgb(hex) {
       hex = hex.replace(/^#/, '');
       const bigint = parseInt(hex, 16);
@@ -210,7 +202,7 @@
       return { r, g, b, a: 255 };
     }
 
-    // Listen for clicks on the canvas.
+    // Add click event listener to canvas.
     canvas.addEventListener('click', function(e) {
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -222,8 +214,8 @@
       updateRecentColors(selectedColor);
     });
 
-    // Download function: for mobile devices, use the Web Share API.
-    async function shareImage() {
+    // Unified download/share function: uses Web Share API if available, otherwise triggers a download.
+    function downloadImage() {
       canvas.toBlob(blob => {
         const file = new File([blob], 'colored_cat.png', { type: blob.type });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -233,23 +225,19 @@
             text: 'Check out my colored cat!'
           }).catch(err => console.error('Error sharing:', err));
         } else {
-          alert("Sharing is not supported on this device.");
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'colored_cat.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
         }
-      });
+      }, 'image/png', 1.0);
     }
-
-    // On page load, conditionally show the download button only on mobile.
-    document.addEventListener('DOMContentLoaded', () => {
-      // If on mobile, show the download button and use shareImage.
-      if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        downloadBtn.style.display = 'inline-block';
-        downloadBtn.textContent = "Save to Photos";
-        downloadBtn.addEventListener('click', shareImage);
-      } else {
-        // On desktop, hide the download button.
-        downloadBtn.style.display = 'none';
-      }
-    });
+    
+    downloadBtn.addEventListener('click', downloadImage);
   </script>
 </body>
 </html>
