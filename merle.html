@@ -90,7 +90,7 @@
       <div class="recent-colors" id="recentColors">
         <!-- Last five used colors will appear here -->
       </div>
-      <!-- Download Button (desktop only download function) -->
+      <!-- Download Button (desktop: only download; smart devices: share if available) -->
       <button id="downloadBtn" class="btn">Download</button>
       <!-- Back to Homepage Button -->
       <a href="index.html" class="btn">Back to Homepage</a>
@@ -219,17 +219,41 @@
       updateRecentColors(selectedColor);
     });
 
-    // Download function (only download functionality, no share)
+    // Device detection: smart device if touch-enabled.
+    const isSmartDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
+    // Download function: on smart devices, use share if available; otherwise, download.
     function downloadImage() {
       canvas.toBlob(blob => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'colored_cat.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        if (isSmartDevice && navigator.canShare && navigator.canShare({ files: [new File([blob], 'colored_cat.png', {type: blob.type})] })) {
+          const file = new File([blob], 'colored_cat.png', {type: blob.type});
+          navigator.share({
+            files: [file],
+            title: 'Colored Cat',
+            text: 'Check out my colored cat!'
+          }).catch(err => {
+            console.error('Error sharing:', err);
+            // Fallback to download if sharing fails.
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'colored_cat.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          });
+        } else {
+          // Desktop (or fallback): only download.
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'colored_cat.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
       }, 'image/png', 1.0);
     }
     
