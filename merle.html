@@ -47,6 +47,7 @@
       border: none;
       cursor: pointer;
       vertical-align: middle;
+      transition: background-color 0.1s ease;
     }
     .recent-colors {
       margin-top: 10px;
@@ -71,6 +72,7 @@
       color: #fff;
       cursor: pointer;
       text-decoration: none;
+      display: inline-block;
     }
     .btn:hover {
       background: #C97E9C;
@@ -88,7 +90,10 @@
       <div class="recent-colors" id="recentColors">
         <!-- Last five used colors will appear here -->
       </div>
-      <button id="downloadBtn" class="btn">Download / Share</button>
+      <!-- Download Button (desktop only download function) -->
+      <button id="downloadBtn" class="btn">Download</button>
+      <!-- Back to Homepage Button -->
+      <a href="index.html" class="btn">Back to Homepage</a>
     </div>
     <p>Tap on a region (avoid the blue boundaries) to fill it with the selected color.</p>
   </div>
@@ -96,7 +101,7 @@
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    // Set the image smoothing quality to high (if supported)
+    // Enable high-quality image smoothing.
     ctx.imageSmoothingEnabled = true;
     if (ctx.imageSmoothingQuality) {
       ctx.imageSmoothingQuality = "high";
@@ -127,7 +132,7 @@
       });
     }
 
-    // Load "own.jpeg" at its natural resolution to ensure highest quality.
+    // Load the image "own.jpeg" at its natural resolution for highest quality.
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = "own.jpeg";
@@ -214,26 +219,17 @@
       updateRecentColors(selectedColor);
     });
 
-    // Unified download/share function: uses Web Share API if available, otherwise triggers a download.
+    // Download function (only download functionality, no share)
     function downloadImage() {
       canvas.toBlob(blob => {
-        const file = new File([blob], 'colored_cat.png', { type: blob.type });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            files: [file],
-            title: 'Colored Cat',
-            text: 'Check out my colored cat!'
-          }).catch(err => console.error('Error sharing:', err));
-        } else {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'colored_cat.png';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-        }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'colored_cat.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
       }, 'image/png', 1.0);
     }
     
