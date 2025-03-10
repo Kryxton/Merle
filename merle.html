@@ -78,24 +78,70 @@
       background: #C97E9C;
       color: #2C2C2C;
     }
+
+    /* New: Desktop color grid (hidden by default) */
+    #desktopColorGrid {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 30px); /* 8 squares per row */
+      grid-gap: 5px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .color-square {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .color-square:hover {
+      transform: scale(1.1);
+    }
+
+    /* Show/hide "Toggle Color Grid" button only on desktop */
+    @media (max-width: 767px) {
+      #toggleGridBtn {
+        display: none; /* hide on smaller screens */
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Color Merle Yourself</h1>
     <canvas id="canvas"></canvas>
+
     <div class="controls">
       <label for="colorPicker">Choose Fill Color:</label>
       <input type="color" id="colorPicker" value="#FF0000">
+      
       <div class="recent-colors" id="recentColors">
         <!-- Last five used colors will appear here -->
       </div>
+
       <!-- Download Button (desktop: only download; smart devices: share if available) -->
       <button id="downloadBtn" class="btn">Download</button>
       <!-- Back to Homepage Button -->
       <a href="index.html" class="btn">Back to Homepage</a>
+      
+      <!-- NEW: Toggle button for the color grid (desktop only) -->
+      <button id="toggleGridBtn" class="btn">Show/Hide Color Grid</button>
     </div>
     <p>Tap on a region to fill it with the selected color.</p>
+
+    <!-- NEW: Second color board (grid) -->
+    <div id="desktopColorGrid">
+      <h3>Pick a Color from the Grid</h3>
+      <div class="color-grid" id="colorGridSquares">
+        <!-- We'll populate squares via JS -->
+      </div>
+    </div>
   </div>
   
   <script>
@@ -110,6 +156,9 @@
     const colorPicker = document.getElementById('colorPicker');
     const recentColorsContainer = document.getElementById('recentColors');
     const downloadBtn = document.getElementById('downloadBtn');
+    const toggleGridBtn = document.getElementById('toggleGridBtn');
+    const desktopColorGrid = document.getElementById('desktopColorGrid');
+    const colorGridSquares = document.getElementById('colorGridSquares');
 
     // Maintain an array of the last five used colors.
     let recentColors = [];
@@ -294,6 +343,44 @@
     }
     
     downloadBtn.addEventListener('click', downloadImage);
+
+    /********** NEW: Color Grid Implementation **********/
+    // Example palette rows (you can change these colors):
+    const colorPaletteRows = [
+      // Row of grayscale
+      ["#FFFFFF","#D9D9D9","#BFBFBF","#A5A5A5","#8C8C8C","#737373","#595959","#000000"],
+      // Row of reds/yellows
+      ["#FF0000","#FF4000","#FF8000","#FFC000","#FFFF00","#C0FF00","#80FF00","#40FF00"],
+      // Row of greens/cyans
+      ["#00FF00","#00FF40","#00FF80","#00FFC0","#00FFFF","#00C0FF","#0080FF","#0040FF"],
+      // Row of blues/magentas
+      ["#0000FF","#4000FF","#8000FF","#C000FF","#FF00FF","#FF00C0","#FF0080","#FF0040"],
+      // Some extra row
+      ["#F0F8FF","#FAEBD7","#FFE4E1","#FFFACD","#F5FFFA","#F0FFF0","#F0FFFF","#FFF5EE"]
+    ];
+    
+    function createDesktopColorGrid() {
+      colorPaletteRows.forEach(row => {
+        row.forEach(color => {
+          const square = document.createElement('div');
+          square.className = 'color-square';
+          square.style.backgroundColor = color;
+          square.addEventListener('click', () => {
+            colorPicker.value = color;        // sets the color input
+            updateRecentColors(color);       // track in recent colors
+          });
+          colorGridSquares.appendChild(square);
+        });
+      });
+    }
+    createDesktopColorGrid();
+
+    // Toggle the grid’s visibility on desktop
+    let gridVisible = false;
+    toggleGridBtn.addEventListener('click', () => {
+      gridVisible = !gridVisible;
+      desktopColorGrid.style.display = gridVisible ? 'block' : 'none';
+    });
   </script>
 </body>
 </html>
