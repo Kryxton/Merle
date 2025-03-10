@@ -75,13 +75,13 @@
       display: block;
     }
     /* Socials Section */
-.socials {
-  display: grid;
-  grid-template-columns: repeat(3, 50px);
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
+    .socials {
+      display: grid;
+      grid-template-columns: repeat(3, 50px);
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
     .socials a {
       display: flex;
       width: 50px;
@@ -290,7 +290,6 @@
       margin-bottom: 10px;
       color: #fff;
     }
-
     /* First Meme Section (single meme) */
     .meme-section.first-meme .meme-container {
       text-align: center;
@@ -308,44 +307,38 @@
       object-fit: contain;
       border-radius: 10px;
     }
-
-/* Community Memes Section – Horizontal slideshow */
-.meme-section.community-memes .meme-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.meme-section.community-memes .meme-item {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  border: 2px solid #C97E9C;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 5px rgba(201,126,156,0.1);
-  background-color: rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
-  margin-bottom: 10px;
-  /* Responsive frame dimensions */
-  width: clamp(120px, 20vw, 200px);
-  height: clamp(120px, 20vw, 200px);
-}
-
-.meme-section.community-memes .meme-item:hover {
-  transform: scale(1.03);
-}
-
-.meme-section.community-memes .meme-item img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
+    /* Community Memes Section – Horizontal slideshow */
+    .meme-section.community-memes .meme-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .meme-section.community-memes .meme-item {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
+      background-color: rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      margin-bottom: 10px;
+      width: clamp(120px, 20vw, 200px);
+      height: clamp(120px, 20vw, 200px);
+    }
+    .meme-section.community-memes .meme-item:hover {
+      transform: scale(1.03);
+    }
+    .meme-section.community-memes .meme-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
     /* Chart Container */
     .chart-container {
       width: 100%;
@@ -362,7 +355,6 @@
       height: 500px;
       border: none;
     }
-
     /* Responsive adjustments for small devices */
     @media (max-width: 480px) {
       body {
@@ -377,60 +369,102 @@
       }
     }
     /* Modal Container */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-  transition: opacity 0.3s ease;
-}
-
-/* Modal Content (Enlarged Image) */
-.modal-content {
-  display: block;
-  margin: 5% auto;
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-}
-
-/* Close Button */
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-.modal-close:hover {
-  color: #bbb;
-}
-
-/* Download/Add to Photos Button */
-.modal-btn {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #4A4A4A;
-  color: #fff;
-  border: 2px solid #C97E9C;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
-}
-.modal-btn:hover {
-  background-color: #C97E9C;
-  color: #2C2C2C;
-}
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      transition: opacity 0.3s ease;
+    }
+    /* Modal Content (Enlarged Image) */
+    .modal-content {
+      display: block;
+      margin: 5% auto;
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+    /* Close Button */
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #bbb;
+    }
+    /* Download/Add to Photos Button */
+    .modal-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #4A4A4A;
+      color: #fff;
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .modal-btn:hover {
+      background-color: #C97E9C;
+      color: #2C2C2C;
+    }
+    /* Story Section */
+    .story-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.3);
+      border: 2px solid #C97E9C;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(201,126,156,0.1);
+      transition: all 0.3s ease;
+    }
+    .story-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #FFC107;
+      text-shadow: 0 0 5px rgba(255,193,7,0.5);
+    }
+    .story-content {
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+    .read-more-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 15px;
+      background-color: #4A4A4A;
+      border: 2px solid #C97E9C;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #fff;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .read-more-btn:hover {
+      background-color: #C97E9C;
+      color: #2C2C2C;
+      box-shadow: 0 0 10px rgba(201,126,156,0.2);
+    }
+    .story-content.expanded {
+      -webkit-line-clamp: unset;
+    }
   </style>
 </head>
 <body>
@@ -458,10 +492,10 @@
       <a href="https://pump.fun/Bv133dHPMHXrfYoDe2JFEVMqoj7Pt3XFiqfnLXBUpump" target="_blank" rel="noopener noreferrer">
         <img src="Pumpfun.jpeg" alt="PumpFun">
       </a>
-  <a href="https://www.tiktok.com/@merle.the.cat8?_t=ZN-8uPactwONPi&_r=1" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.tiktok.com/@merle.the.cat8?_t=ZN-8uPactwONPi&_r=1" target="_blank" rel="noopener noreferrer">
         <img src="tiktok.png" alt="TikTok">
       </a>
- <a href="https://www.youtube.com/@Merlethecat8" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.youtube.com/@Merlethecat8" target="_blank" rel="noopener noreferrer">
         <img src="youtube.png" alt="YouTube">
       </a>
     </div>
@@ -475,8 +509,7 @@
       <button class="copy-btn" onclick="copyCA()">Copy</button>
     </div>
 
-
-<!-- First Meme Section (single meme) -->
+    <!-- First Meme Section (single meme) -->
     <div class="meme-section first-meme">
       <div class="meme-container">
         <div class="meme-item">
@@ -485,19 +518,28 @@
       </div>
     </div>
 
-   <div style="text-align:center; margin: 20px 0;">
-  <a href="merle.html" style="text-decoration: none;">
-    <button class="save-btn">Create your own Merle</button>
-  </a>
-</div>
+    <div style="text-align:center; margin: 20px 0;">
+      <a href="merle.html" style="text-decoration: none;">
+        <button class="save-btn">Create your own Merle</button>
+      </a>
+    </div>
 
-<!-- First Meme Section (single meme) -->
+    <!-- First Meme Section (single meme) -->
     <div class="meme-section first-meme">
       <div class="meme-container">
         <div class="meme-item">
           <img src="meme.jpeg" alt="Meme 1">
         </div>
       </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="story-section">
+      <h2>The Story</h2>
+      <div class="story-content" id="storyContent">
+        Merle the cat has a unique story, let’s start from the beginning. My 8 year old daughter Harlo has been an avid painter and illustrator since she could hold a pencil, she recently started using my work iPad to color digital drawings, she accidentally broke the screen and her pencil wouldn’t work anymore so she has been making digital finger paintings. She came up to me a few days ago and asked me if I can buy her her own iPad. I let her know that is a large purchase and she would have to earn it. She said “well maybe I can help mommy around the house for money” I smiled and let her know that’s a great idea! A lightbulb went on and she told me that would take too long and she then said “Daddy what if I make a crypto!” I am an active investor I know crypto and it is a large part of our families life. When she said that I couldn’t help but feel the need to do whatever I could to make that happen for her. So we sat down for a day, made a plan, decided on a token name and art etc, we set up socials and we’re off the the races. We decided to go with Merle the Cat, which is our family cat, who Harlo loves dearly. We launched the token and it managed to migrate, we have since built an amazing community and a strong support system, we regularly live stream Harlos drawing on our socials and the sweet little 8 year old dev has really built a nice fan base! We love what is becoming of Merle the Cat and look forward to years of amazing art, building community and promoting the future of crypto. To end off here is Harlos signature catch phrase she says in her bubbly sweet little voice, “Make fun art and be HAPPY!!”
+      </div>
+      <button class="read-more-btn" id="readMoreBtn">Read More</button>
     </div>
     
     <!-- Photo Editor Section -->
@@ -561,28 +603,28 @@
         <div class="meme-item">
           <img src="meme4.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme5.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme6.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme7.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme8.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme9.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme10.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme11.jpeg" alt="Meme 4">
         </div>
-  <div class="meme-item">
+        <div class="meme-item">
           <img src="meme12.jpeg" alt="Meme 4">
         </div>
       </div>
@@ -849,47 +891,61 @@
     
     document.getElementById("resetLayoutBtn").addEventListener("click", resetLayout);
     
+    // Updated Save Photo function for highest quality download
     function savePhoto() {
       if (!uploadedPhoto.src || uploadedPhoto.style.display === 'none') {
         alert("Please upload a photo first.");
         return;
       }
+      // Use the natural resolution of the uploaded photo for highest quality
+      const naturalWidth = uploadedPhoto.naturalWidth;
+      const naturalHeight = uploadedPhoto.naturalHeight;
       const stageRect = photoStage.getBoundingClientRect();
-      const canvas = document.createElement('canvas');
-      canvas.width = stageRect.width;
-      canvas.height = stageRect.height;
-      const ctx = canvas.getContext('2d');
-      // Draw the uploaded photo as background
-      ctx.drawImage(uploadedPhoto, 0, 0, canvas.width, canvas.height);
+      const scaleFactor = naturalWidth / stageRect.width;
       
-      // Draw the overlay image (catOverlay)
+      const canvas = document.createElement('canvas');
+      canvas.width = naturalWidth;
+      canvas.height = naturalHeight;
+      const ctx = canvas.getContext('2d');
+      
+      // Draw the uploaded photo at its natural resolution
+      ctx.drawImage(uploadedPhoto, 0, 0, naturalWidth, naturalHeight);
+      
+      // Draw the overlay image with proper transformation
       const overlayImg = new Image();
       overlayImg.crossOrigin = "Anonymous";
       overlayImg.src = catOverlay.src;
       overlayImg.onload = () => {
-        const stageBox = photoStage.getBoundingClientRect();
-        const logoBox = catOverlay.getBoundingClientRect();
-        const posX = logoBox.left - stageBox.left;
-        const posY = logoBox.top - stageBox.top;
+        // Get the base (untransformed) position and size of the overlay
+        const overlayLeft = parseFloat(catOverlay.style.left) || 0;
+        const overlayTop = parseFloat(catOverlay.style.top) || 0;
+        const baseWidth = catOverlay.offsetWidth;
+        const baseHeight = catOverlay.offsetHeight;
+        const overlayCenterX = (overlayLeft + baseWidth / 2) * scaleFactor;
+        const overlayCenterY = (overlayTop + baseHeight / 2) * scaleFactor;
+        const drawnWidth = baseWidth * currentScale * scaleFactor;
+        const drawnHeight = baseHeight * currentScale * scaleFactor;
+        
         ctx.save();
-        ctx.translate(posX + logoBox.width/2, posY + logoBox.height/2);
+        ctx.translate(overlayCenterX, overlayCenterY);
         ctx.rotate(currentAngle * Math.PI / 180);
-        ctx.scale(currentScale, currentScale);
-        ctx.drawImage(overlayImg, -logoBox.width/2, -logoBox.height/2, logoBox.width, logoBox.height);
+        ctx.drawImage(overlayImg, -drawnWidth/2, -drawnHeight/2, drawnWidth, drawnHeight);
         ctx.restore();
+        
         // Draw text overlays
         document.querySelectorAll('.draggable-text').forEach(textEl => {
-          const style = window.getComputedStyle(textEl);
-          const fontSize = style.fontSize;
-          const fontFamily = style.fontFamily;
-          const color = style.color;
-          const left = textEl.offsetLeft;
-          const top = textEl.offsetTop;
-          ctx.font = `${fontSize} ${fontFamily}`;
-          ctx.fillStyle = color;
-          ctx.fillText(textEl.textContent, left, top + parseInt(fontSize));
+          const textLeft = textEl.offsetLeft * scaleFactor;
+          const textTop = textEl.offsetTop * scaleFactor;
+          const computedStyle = window.getComputedStyle(textEl);
+          const fontSize = parseFloat(computedStyle.fontSize) * scaleFactor;
+          const fontFamily = computedStyle.fontFamily;
+          ctx.font = `${fontSize}px ${fontFamily}`;
+          ctx.fillStyle = computedStyle.color;
+          ctx.textBaseline = "top";
+          ctx.fillText(textEl.textContent, textLeft, textTop);
         });
-        const dataURL = canvas.toDataURL('image/png');
+        
+        const dataURL = canvas.toDataURL('image/png', 1.0);
         const link = document.createElement('a');
         link.href = dataURL;
         link.download = 'two_faced_cat_composite.png';
@@ -899,59 +955,89 @@
       };
       overlayImg.onerror = () => alert("Error loading the overlay image.");
     }
+    
+    // Meme Modal and Download Functionality
     document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.getElementById('modalImage');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const closeBtn = document.querySelector('.modal-close');
-
-  // Detect if device is mobile (smart device)
-  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  // Set button text accordingly
-  downloadBtn.textContent = isMobile ? 'Add to Photos' : 'Download';
-
-  // Add click event to every image in the community memes section
-  const memeImages = document.querySelectorAll('.meme-section.community-memes .meme-item img');
-  memeImages.forEach(img => {
-    img.addEventListener('click', function() {
-      modal.style.display = 'block';
-      modalImage.src = this.src;
-      // Save the image source on the button for download functionality
-      downloadBtn.setAttribute('data-img-src', this.src);
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const closeBtn = document.querySelector('.modal-close');
+    
+      // Detect if device is mobile (smart device)
+      const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      // Set button text accordingly
+      downloadBtn.textContent = isMobile ? 'Add to Photos' : 'Download';
+    
+      // Add click event to every image in the community memes section
+      const memeImages = document.querySelectorAll('.meme-section.community-memes .meme-item img');
+      memeImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modal.style.display = 'block';
+          modalImage.src = this.src;
+          // Save the image source on the button for download functionality
+          downloadBtn.setAttribute('data-img-src', this.src);
+        });
+      });
+    
+      // Close modal when clicking the close button
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+    
+      // Close modal when clicking outside the modal content
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    
+      // Download function for memes – ensures high quality download for desktop too
+      downloadBtn.addEventListener('click', function() {
+        const imgSrc = this.getAttribute('data-img-src');
+        if (!imgSrc) return;
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = imgSrc;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          const dataURL = canvas.toDataURL('image/png', 1.0);
+          const link = document.createElement('a');
+          link.href = dataURL;
+          link.download = 'meme_image.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+        img.onerror = function() {
+          alert("Error loading the meme image.");
+        };
+      });
     });
-  });
-
-  // Close modal when clicking the close button
-  closeBtn.addEventListener('click', function() {
-    modal.style.display = 'none';
-  });
-
-  // Close modal when clicking outside the modal content
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-
-  // Download/Add to Photos functionality
-  downloadBtn.addEventListener('click', function() {
-    const imgSrc = this.getAttribute('data-img-src');
-    if (!imgSrc) return;
-    // Create a temporary link element to trigger the download
-    const link = document.createElement('a');
-    link.href = imgSrc;
-    link.download = 'meme_image';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  });
-});
+    
+    // Story Read More functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const storyContent = document.getElementById('storyContent');
+      const readMoreBtn = document.getElementById('readMoreBtn');
+      readMoreBtn.addEventListener('click', function() {
+        if (storyContent.classList.contains('expanded')) {
+          storyContent.classList.remove('expanded');
+          readMoreBtn.textContent = 'Read More';
+        } else {
+          storyContent.classList.add('expanded');
+          readMoreBtn.textContent = 'Read Less';
+        }
+      });
+    });
   </script>
   <!-- Modal for Enlarged Meme -->
-<div id="imageModal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="modalImage" alt="Enlarged Meme">
-  <button id="downloadBtn" class="modal-btn"></button>
-</div>
+  <div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage" alt="Enlarged Meme">
+    <button id="downloadBtn" class="modal-btn"></button>
+  </div>
 </body>
 </html>
