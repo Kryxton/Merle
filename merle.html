@@ -78,8 +78,7 @@
       background: #C97E9C;
       color: #2C2C2C;
     }
-
-    /* New: Desktop color grid (hidden by default) */
+    /* NEW: Desktop color grid (hidden by default) */
     #desktopColorGrid {
       display: none;
       margin-top: 20px;
@@ -103,7 +102,6 @@
     .color-square:hover {
       transform: scale(1.1);
     }
-
     /* Show/hide "Toggle Color Grid" button only on desktop */
     @media (max-width: 767px) {
       #toggleGridBtn {
@@ -116,25 +114,20 @@
   <div class="container">
     <h1>Color Merle Yourself</h1>
     <canvas id="canvas"></canvas>
-
     <div class="controls">
       <label for="colorPicker">Choose Fill Color:</label>
       <input type="color" id="colorPicker" value="#FF0000">
-      
       <div class="recent-colors" id="recentColors">
         <!-- Last five used colors will appear here -->
       </div>
-
       <!-- Download Button (desktop: only download; smart devices: share if available) -->
       <button id="downloadBtn" class="btn">Download</button>
       <!-- Back to Homepage Button -->
       <a href="index.html" class="btn">Back to Homepage</a>
-      
       <!-- NEW: Toggle button for the color grid (desktop only) -->
       <button id="toggleGridBtn" class="btn">Show/Hide Color Grid</button>
     </div>
     <p>Tap on a region to fill it with the selected color.</p>
-
     <!-- NEW: Second color board (grid) -->
     <div id="desktopColorGrid">
       <h3>Pick a Color from the Grid</h3>
@@ -163,7 +156,9 @@
     // Maintain an array of the last five used colors.
     let recentColors = [];
     function updateRecentColors(newColor) {
+      // Do not add if newColor is already the last used.
       if (recentColors.length && recentColors[recentColors.length - 1] === newColor) return;
+      // Remove any existing occurrence to avoid duplicates.
       recentColors = recentColors.filter(c => c !== newColor);
       recentColors.push(newColor);
       if (recentColors.length > 5) recentColors.shift();
@@ -345,18 +340,18 @@
     downloadBtn.addEventListener('click', downloadImage);
 
     /********** NEW: Color Grid Implementation **********/
-    // Example palette rows (you can change these colors):
+    // NEW: Updated color palette with more varied brightness/darkness.
     const colorPaletteRows = [
-      // Row of grayscale
-      ["#FFFFFF","#D9D9D9","#BFBFBF","#A5A5A5","#8C8C8C","#737373","#595959","#000000"],
-      // Row of reds/yellows
-      ["#FF0000","#FF4000","#FF8000","#FFC000","#FFFF00","#C0FF00","#80FF00","#40FF00"],
-      // Row of greens/cyans
-      ["#00FF00","#00FF40","#00FF80","#00FFC0","#00FFFF","#00C0FF","#0080FF","#0040FF"],
-      // Row of blues/magentas
-      ["#0000FF","#4000FF","#8000FF","#C000FF","#FF00FF","#FF00C0","#FF0080","#FF0040"],
-      // Some extra row
-      ["#F0F8FF","#FAEBD7","#FFE4E1","#FFFACD","#F5FFFA","#F0FFF0","#F0FFFF","#FFF5EE"]
+      // Row 1: Bright, saturated colors
+      ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FFA500", "#FFC0CB"],
+      // Row 2: Dark, saturated colors
+      ["#8B0000", "#006400", "#00008B", "#808000", "#8B008B", "#008B8B", "#FF8C00", "#DA70D6"],
+      // Row 3: Light, pastel colors
+      ["#FFB6C1", "#ADD8E6", "#90EE90", "#FFFFE0", "#E6E6FA", "#FFE4E1", "#F5DEB3", "#FFFACD"],
+      // Row 4: Neutrals and grays
+      ["#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#D3D3D3", "#FFFFFF"],
+      // Row 5: Additional unique hues
+      ["#FF1493", "#00CED1", "#FFD700", "#7CFC00", "#BA55D3", "#FF7F50", "#40E0D0", "#ADFF2F"]
     ];
     
     function createDesktopColorGrid() {
@@ -366,8 +361,8 @@
           square.className = 'color-square';
           square.style.backgroundColor = color;
           square.addEventListener('click', () => {
-            colorPicker.value = color;        // sets the color input
-            updateRecentColors(color);       // track in recent colors
+            colorPicker.value = color; // update the color picker
+            updateRecentColors(color); // update recent colors (duplicates removed)
           });
           colorGridSquares.appendChild(square);
         });
@@ -375,11 +370,16 @@
     }
     createDesktopColorGrid();
 
-    // Toggle the grid’s visibility on desktop
+    // Toggle the grid’s visibility on desktop and scroll to it when shown.
     let gridVisible = false;
     toggleGridBtn.addEventListener('click', () => {
       gridVisible = !gridVisible;
-      desktopColorGrid.style.display = gridVisible ? 'block' : 'none';
+      if (gridVisible) {
+        desktopColorGrid.style.display = 'block';
+        desktopColorGrid.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        desktopColorGrid.style.display = 'none';
+      }
     });
   </script>
 </body>
